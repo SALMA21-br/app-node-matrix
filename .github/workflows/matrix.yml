@@ -1,0 +1,17 @@
+﻿name: Test App Node.js sur plusieurs environnements
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${\{ matrix.os \}}
+    strategy:
+      matrix:
+        node: [16, 18, 20]
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Utiliser Node.js ${\{ matrix.node \}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${\{ matrix.node \}}
+      - run: npm install
+      - run: npm test
